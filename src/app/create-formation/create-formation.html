@@ -1,1 +1,84 @@
-<p>create-formation works!</p>
+<mat-card class="mx-auto max-w-180" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title class="text-2xl!">Nouvelle formation</mat-card-title>
+    <mat-card-subtitle>Les champs marqués d'un * sont obligatoires</mat-card-subtitle>
+  </mat-card-header>
+
+  <form [formRoot]="form">
+    <mat-card-content class="flex! flex-col gap-2 pt-6!">
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Titre</mat-label>
+        <input id="title" matInput [formField]="form.title">
+        <mat-hint align="end">{{ form.title().value().length }} / 100</mat-hint>
+        @if (form.title().getError('required')) {
+          <mat-error>Le titre est obligatoire</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Description</mat-label>
+        <textarea id="description" matInput rows="5" [formField]="form.description"></textarea>
+        <mat-hint align="end">{{ form.description().value().length }} / 1000</mat-hint>
+        @if (form.description().getError('required')) {
+          <mat-error>La description est obligatoire</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Lieu et date côte à côte, empilés sur petit écran -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Lieu</mat-label>
+          <mat-icon matIconPrefix>place</mat-icon>
+          <input id="location" matInput [formField]="form.location">
+          @if (form.location().getError('required')) {
+            <mat-error>Le lieu est obligatoire</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date</mat-label>
+          <input id="date" matInput [matDatepicker]="picker" [formField]="form.date">
+          <mat-hint>JJ/MM/AAAA</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (form.date().getError('required')) {
+            <mat-error>La date est obligatoire ou n'est pas valide</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Tags</mat-label>
+        <mat-chip-grid #chipGrid [formField]="form.tags">
+          @for (tag of form.tags().value(); track tag) {
+            <mat-chip-row (removed)="removeTag(tag)">
+              {{ tag }}
+              <button matChipRemove [attr.aria-label]="'Retirer ' + tag">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          }
+        </mat-chip-grid>
+        <input id="tags"
+               placeholder="Ajouter un tag puis Entrée"
+               [matChipInputFor]="chipGrid"
+               (matChipInputTokenEnd)="addTag($event)">
+        <mat-hint align="end">{{ form.tags().value().length }} / {{ maxTags }}</mat-hint>
+        @if (form.tags().getError('tagTooLong')) {
+          <mat-error>Un tag ne peut pas dépasser {{ maxTagLength }} caractères</mat-error>
+        } @else if (form.tags().getError('maxLength')) {
+          <mat-error>Maximum {{ maxTags }} tags</mat-error>
+        }
+      </mat-form-field>
+
+    </mat-card-content>
+
+    <mat-card-actions class="px-4! pt-2! pb-4!" align="end">
+      <button class="w-full sm:w-auto" mat-flat-button type="submit" [disabled]="form().invalid()">
+        <mat-icon>add</mat-icon>
+        Créer la formation
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

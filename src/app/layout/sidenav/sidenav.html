@@ -1,1 +1,8 @@
-<p>sidenav works!</p>
+<mat-nav-list class="pt-2!">
+  @for (link of links; track link.path) {
+    <a mat-list-item [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [activated]="rla.isActive">
+      <mat-icon matListItemIcon>{{ link.icon }}</mat-icon>
+      <span matListItemTitle>{{ link.label }}</span>
+    </a>
+  }
+</mat-nav-list>

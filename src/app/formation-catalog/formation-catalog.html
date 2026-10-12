@@ -1,1 +1,15 @@
-<p>formation-catalog works!</p>
+<div class="md:px-6 md:pt-6">
+  <mat-form-field appearance="outline" class="w-full md:max-w-100">
+    <mat-label>Rechercher par titre</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput [formField]="titleFilterField">
+  </mat-form-field>
+</div>
+
+<div class="grid grid-cols-[repeat(auto-fill,minmax(min(280px,100%),1fr))] gap-4 md:gap-6 md:p-6">
+  @for (formation of filteredFormations(); track formation.id) {
+    <app-formation-card [formationInput]="formation"></app-formation-card>
+  } @empty {
+    <p class="col-span-full text-center opacity-70">Aucune formation ne correspond à votre recherche.</p>
+  }
+</div>

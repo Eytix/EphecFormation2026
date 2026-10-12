@@ -1,1 +1,15 @@
-<p>home works!</p>
+<h1>Bienvenue</h1>
+<p>
+  Parcourez le catalogue
+  (<ng-container [ngPlural]="formationCount()">
+    <ng-template ngPluralCase="=0">aucune formation</ng-template>
+    <ng-template ngPluralCase="=1">1 formation</ng-template>
+    <ng-template ngPluralCase="other">{{ formationCount() }} formations</ng-template>
+  </ng-container>)
+  ou créez une nouvelle formation.
+</p>
+
+<div class="flex gap-3">
+  <a mat-flat-button routerLink="/catalogue">Voir le catalogue</a>
+  <a mat-stroked-button routerLink="/formations/create">Créer une formation</a>
+</div>
