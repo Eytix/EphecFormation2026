@@ -2,11 +2,12 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "44115d14-105a-47b9-a6b8-4a73f417c61d"
   },
   "newProjectRoot": "projects",
   "projects": {
-    "Formation": {
+    "pdw": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -24,16 +25,7 @@
                 "input": "public"
               }
             ],
-            "prerender": true,
-            "styles": ["src/material-theme.scss", "src/styles.css"],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "security": {
-              "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "styles": ["src/material-theme.scss", "src/styles.css"]
           },
           "configurations": {
             "production": {
@@ -63,10 +55,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Formation:build:production"
+              "buildTarget": "pdw:build:production"
             },
             "development": {
-              "buildTarget": "Formation:build:development"
+              "buildTarget": "pdw:build:development"
             }
           },
           "defaultConfiguration": "development"
